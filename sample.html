@@ -1,1 +1,79 @@
-<div class="headerFW"></div>
+<div class="headerFW m-bottom" data-stick="false">
+  <div class="headerFW__headbanner">
+    <a href="#framway__components-headerFW" id="logo"><img src="https://picsum.photos/250/100" alt=""></a>
+    <div>Some random text that serve as punchline</div>
+  </div>
+  <nav class="headerFW__nav">
+    <div class="headerFW__nav__inline" itemscope itemtype="http://schema.org/SiteNavigationElement">
+      <ul class="level_1">
+        <li class="first submenu trail">
+          <a href="#framway__components-headerFW" title="Item 1" itemprop="url"><span itemprop="name">Item 1</span></a>
+          <ul class="level_2">
+            <li class="trail">
+              <a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.1</span></a>
+              <ul class="level_3">
+                <li class="active"><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.1.1</span></a></li>
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.1.2</span></a></li>
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.1.3</span></a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#framway__components-headerFW" itemprop="url" title="Item 1.2"><span itemprop="name">Item 1.2</span></a>
+              <ul class="level_3">
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.2.1</span></a></li>
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.2.2</span></a></li>
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.2.3</span></a></li>
+              </ul>
+            </li>
+            <li class="">
+              <a href="#framway__components-headerFW" itemprop="url" title="Item 1.3"><span itemprop="name">Item 1.3</span></a>
+              <ul class="level_3">
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.3.1</span></a></li>
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.3.2</span></a></li>
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.3.3</span></a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#framway__components-headerFW" title="Item 2" itemprop="url"><span itemprop="name">Item 2</span></a>
+        </li>
+        <li class="submenu">
+          <a href="#framway__components-headerFW" title="Item 3" itemprop="url"><span itemprop="name">Item 3</span></a>
+          <ul class="level_2">
+            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 3.1"><span itemprop="name">Item 3.1</span></a></li>
+            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 3.2"><span itemprop="name">Item 3.2</span></a></li>
+            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 3.3"><span itemprop="name">Item 3.3</span></a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#framway__components-headerFW" title="Item 4" itemprop="url"><span itemprop="name">Item 4</span></a>
+        </li>
+        <li class="last submenu ">
+          <a href="#framway__components-headerFW" title="Item 5" itemprop="url"><span itemprop="name">Item 5 with a long name</span></a>
+          <ul class="level_2">
+            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 5.1"><span itemprop="name">Item 5.1 with a long name</span></a></li>
+            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 5.2"><span itemprop="name">Item 5.2</span></a></li>
+            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 5.2"><span itemprop="name">Item 5.3</span></a></li>
+            <li class="">
+              <a href="#framway__components-headerFW" itemprop="url" title="Item 5.3"><span itemprop="name">Item 5.4</span></a>
+              <ul class="level_3">
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 5.4.1</span></a></li>
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 5.4.2</span></a></li>
+                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 5.4.3</span></a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<constructor component="headerFW">
+	<field type="separator" label="Misc"></field>
+	<field type="checkbox" label="Headbanner above" target="class" selected="false" value="headbanner--above" helper="Place the headbanner (logo + punchline & co) on top of the menu."></field>
+	<field type="checkbox" label="Center menu" target="class" selected="false" value="nav--center" helper="Center the menu, if the <b>headbanner is placed above</b>."></field>
+	<field type="checkbox" label="Allow headbanner content" target="class" selected="false" value="headbanner--allowcontent" helper="Allow other contents than the logo to be display in the headbanner."></field>
+	<field type="checkbox" label="Arrowed navigation" target="class" selected="true" value="nav--arrowed" helper="Add little arrows on submenu's items, in the inline navigation."></field>
+</constructor>
