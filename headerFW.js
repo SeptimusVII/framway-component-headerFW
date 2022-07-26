@@ -172,11 +172,5 @@ module.exports = function(app){
         header.$nav.addClass('active');
     };
 
-    $(function () {
-        $('.headerFW').not('.custom').headerFW();
-        utils.addHtmlHook('.headerFW:not(.custom)', function(item){
-            item.headerFW();
-        });
-    });
     return HeaderFW;
 }
