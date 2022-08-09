@@ -32,35 +32,35 @@ module.exports = function(app){
         header.navPanelMenus = {};
         header.$navInline.find('ul').each(function(index,menu){
             var ID = 'root';
-        // define menu's id from it's parent's label
-        if($(menu).parent('li').length)
-            ID = utils.normalize($(menu).parent('li').children().not('ul').text());
+            // define menu's id from it's parent's label
+            if($(menu).parent('li').length)
+                ID = utils.normalize($(menu).parent('li').children().not('ul').text());
 
-        // clone the corresponding html
-        header.navPanelMenus[ID] = {$el : $(menu).clone()};
+            // clone the corresponding html
+            header.navPanelMenus[ID] = {$el : $(menu).clone()};
 
-        // search for li that have sub ul
-        header.navPanelMenus[ID].$el.children('li').each(function(index,item){
-            if($(item).children('ul').length){
-                $(item).append('<div class="toggler"></div>');
+            // search for li that have sub ul
+            header.navPanelMenus[ID].$el.children('li').each(function(index,item){
+                if($(item).children('ul').length){
+                    $(item).append('<div class="toggler"></div>');
+                }
+            });
+            // remove useless html
+            header.navPanelMenus[ID].$el.find('ul').remove();
+
+            // set parent toggler
+            if(ID != 'root'){
+                var label = 'Retour ';
+                if($(menu).parent('li').parent('ul').parent('li').length){
+                    label += $(menu).parent('li').parent('ul').parent('li').clone().children().not('ul').text();
+                    header.navPanelMenus[ID].parentID = utils.normalize($(menu).parent('li').parent('ul').parent('li').clone().children().not('ul').text());
+                }
+                else
+                    header.navPanelMenus[ID].parentID = 'root';
+                var label = 'Retour ';
+                header.navPanelMenus[ID].$el.prepend('<div class="toggler--parent" data-parent="'+header.navPanelMenus[ID].parentID+'"><i class="fas fa-long-arrow-alt-left"></i><span>'+label+'</span></div>');
             }
-        });
-        // remove useless html
-        header.navPanelMenus[ID].$el.find('ul').remove();
-
-        // set parent toggler
-        if(ID != 'root'){
-            var label = 'Retour ';
-            if($(menu).parent('li').parent('ul').parent('li').length){
-                label += $(menu).parent('li').parent('ul').parent('li').clone().children().not('ul').text();
-                header.navPanelMenus[ID].parentID = utils.normalize($(menu).parent('li').parent('ul').parent('li').clone().children().not('ul').text());
-            }
-            else
-                header.navPanelMenus[ID].parentID = 'root';
-            var label = 'Retour ';
-            header.navPanelMenus[ID].$el.prepend('<div class="toggler--parent" data-parent="'+header.navPanelMenus[ID].parentID+'"><i class="fas fa-long-arrow-alt-left"></i><span>'+label+'</span></div>');
-        }
-        header.$navPanel.append(header.navPanelMenus[ID].$el);
+            header.$navPanel.append(header.navPanelMenus[ID].$el);
         });
 
         // EVENTS
