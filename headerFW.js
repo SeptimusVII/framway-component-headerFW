@@ -10,123 +10,113 @@ module.exports = function(app){
 
     HeaderFW.prototype.onCreate = function(){
         var header = this;
-        header.$clone = header.$el.clone().attr('id','headerFW--clone').insertAfter(header.$el);
-        header.$headbanner = header.$el.find('.headerFW__headbanner');
-        header.$nav = header.$el.find('.headerFW__nav');
-        header.$navInline = header.$nav.find('.headerFW__nav__inline');
-        header.$navPanel = $('<div class="headerFW__nav__panel"></div>').appendTo(header.$nav);
-        header.$toggler = $('<div class="headerFW__nav__toggler"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>').appendTo(header.$nav);
-        header.$loader = $('<div class="loader"><i class="fas fa-circle-notch fa-spin"></i></div>').insertAfter(header.$nav);
-        header.hasStick = header.getData('stick',true);
-        header.$stickyEl = header.$el;
-        if(header.$el.hasClass('headbanner--above'))
-            header.$stickyEl = header.$nav;
+        header.$logo      = header.$el.find('.headerFW__logo__wrapper');
+        header.$nav       = header.$el.find('.headerFW__nav__wrapper');
+        header.$navInline = header.$nav.find('.headerFW__nav__inline').length ?  header.$nav.find('.headerFW__nav__inline') : header.$nav.find('nav.mod_navigation').addClass('headerFW__nav__inline');
+        header.$navPanel  = $('<div class="headerFW__nav__panel"></div>').appendTo(header.$nav);
+        header.$toggler   = $('<div class="headerFW__nav__toggler"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>').appendTo(header.$nav);
+        header.$loader    = $('<div class="loader"><i class="fas fa-circle-notch fa-spin"></i></div>').insertAfter(header.$nav);
+        header.$topbar    = $('.headerFW__topbar').length  ? $('.headerFW__topbar')  : false;
+        header.$search    = $('.headerFW__search').length  ? $('.headerFW__search')  : false;
+        header.$lang      = $('.headerFW__lang').length    ? $('.headerFW__lang')    : false;
+        header.$postnav   = $('.headerFW__postnav').length ? $('.headerFW__postnav') : false;
+        header.stick      = header.getData('stick',true);
+        header.watchNav   = header.getData('watchnav',true);
 
-        header.$clone.find('.headerFW__nav').addClass('active');
-        $.each(header.$clone.find('a,nav,h1').toArray().reverse(),function(index,item){
-            $(item).replaceWith($('<span/>').addClass(item.className).html($(item).html()));
-        });
-        header.$clone.find("[itemtype],[itemscope],[itemprop]").removeAttr('itemtype itemscope itemprop');
 
         // PANEL CONSTRUCT
         header.navPanelMenus = {};
         header.$navInline.find('ul').each(function(index,menu){
-            var ID = 'root';
             // define menu's id from it's parent's label
+            var ID = 'root';
             if($(menu).parent('li').length)
                 ID = utils.normalize($(menu).parent('li').children().not('ul').text());
+            // check duplicate IDs
+            if (typeof header.navPanelMenus[ID] != 'undefined')
+                ID = ID+'-'+index;
 
-            // clone the corresponding html
+            // clone the corresponding html and setup panel items
             header.navPanelMenus[ID] = {$el : $(menu).clone()};
+            header.navPanelMenus[ID].$el.addClass('panel__item').attr('data-panel',utils.normalize($(menu).parent('li').children().not('ul').text()));
 
             // search for li that have sub ul
             header.navPanelMenus[ID].$el.children('li').each(function(index,item){
                 if($(item).children('ul').length){
-                    $(item).append('<div class="toggler"></div>');
+                    $(item).append('<div class="toggler chevron"></div>');
                 }
             });
             // remove useless html
             header.navPanelMenus[ID].$el.find('ul').remove();
+            header.navPanelMenus[ID].$el.append('<div class="panel__actions"></div>');
 
             // set parent toggler
             if(ID != 'root'){
-                var label = 'Retour ';
-                if($(menu).parent('li').parent('ul').parent('li').length){
-                    label += $(menu).parent('li').parent('ul').parent('li').clone().children().not('ul').text();
-                    header.navPanelMenus[ID].parentID = utils.normalize($(menu).parent('li').parent('ul').parent('li').clone().children().not('ul').text());
-                }
+                header.navPanelMenus[ID].$el.attr('data-panel',utils.normalize($(menu).parent('li').children().not('ul').text()));
+                var label = 'Retour';
+                if($(menu).parent('li').parent('ul').parent('li').length)
+                    header.navPanelMenus[ID].$el.attr('data-parent',utils.normalize($(menu).parent('li').parent('ul').parent('li').children().not('ul').text()));
                 else
-                    header.navPanelMenus[ID].parentID = 'root';
-                var label = 'Retour ';
-                header.navPanelMenus[ID].$el.prepend('<div class="toggler--parent" data-parent="'+header.navPanelMenus[ID].parentID+'"><i class="fas fa-long-arrow-alt-left"></i><span>'+label+'</span></div>');
+                    header.navPanelMenus[ID].$el.attr('data-parent','root');
+
+                header.navPanelMenus[ID].$el.prepend('<div class="panel__title"><div class="chevron left"></div><span>'+$(menu).parent('li').children().not('ul').text()+'</span></div>');
+                header.navPanelMenus[ID].$el.find('.panel__actions').append('<div class="back"><div class="chevron left"></div><span>'+label+'</span></div>');
+            } else {
+                header.navPanelMenus[ID].$el.attr('data-panel','root');
             }
             header.$navPanel.append(header.navPanelMenus[ID].$el);
         });
 
         // EVENTS
-        // click on global toggler
+        
+        // click on main navigation toggler 
+        // open/close the nav panel
         header.$toggler.on('click',function(e){
             header.$toggler.toggleClass('active');
             header.$navPanel.toggleClass('active');
             if(header.$toggler.hasClass('active')){
-                if(header.hasStick){
-                    // console.log('hasStick',header.hasStick);
-                    // header.$el.addClass('stick');
-                }
-                header.$clone.addClass('reduced');
-                header.$el.addClass('reduced');
-                header.$el.addClass('opened');
+                header.$el.addClass('is-open');
+                document.body.addEventListener('click',panelClickHandler);
             }
             else{
-                header.$el.removeClass('opened');
-                if(header.hasStick)
-                    header.$el.removeClass('stick');
+                header.$el.removeClass('is-open');
+                document.body.removeEventListener('click',panelClickHandler);
             }
-            window.dispatchEvent( new Event('scroll') );
+            if (header.watchNav) header.navChecker();
+            header.panelChecker();
         });
+        // handle click "outside" of the header, allowing to close the panel menu by taping on the page body
+        var panelClickHandler = function(e){
+            if (e.target.className.indexOf('headerFW') == -1 && e.target.closest('.headerFW') == null)
+                header.$toggler.trigger('click');
+        }
 
         // click on submenu toggler
+        // hide the current panel, show the next one
         $('body').on('click','.headerFW__nav__panel .toggler',function(e){
             var targetID = utils.normalize($(this).parent('li').children().not('ul').text());
-            header.$navPanel.find('ul').removeClass('active');
-            header.navPanelMenus[targetID].$el.addClass('active');
+            header.$navPanel.find('.panel__item').removeClass('active');
+            header.$navPanel.find('.panel__item[data-panel="'+targetID+'"][data-parent="'+$(this).closest('.panel__item').data('panel')+'"]').addClass('active');
         });
-        // click on back from submenu toggler
-        $('body').on('click','.headerFW__nav__panel .toggler--parent',function(e){
-            header.$navPanel.find('ul').removeClass('active');
-            header.navPanelMenus[$(this).data('parent')].$el.addClass('active');
+        // click on submenu back button
+        // hide the current panel, show the previous one
+        $('body').on('click','.headerFW__nav__panel .panel__actions .back,.headerFW__nav__panel .panel__title',function(e){
+            header.$navPanel.find('.panel__item').removeClass('active');
+            header.$navPanel.find('.panel__item[data-panel='+$(this).closest('.panel__item').data('parent')+']').addClass('active');
         });
 
-        // delete Hammer.defaults.cssProps.userSelect;
-        // header.menuSwipe = new Hammer($('body').get(0));
-        // header.menuSwipe.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 150 });
-        // header.menuEvents = function(event){
-        //     switch(event.type){
-        //         case 'swipeleft':
-        //         if(header.$navPanel.hasClass('active'))
-        //             header.$toggler.trigger('click');
-        //         break;
-        //         case 'swiperight':
-        //         if(!header.$navPanel.hasClass('active'))
-        //             header.$toggler.trigger('click');
-        //         break;
-        //         default: break;
-        //     }
-        // };
-
-        // scroll listener
-        window.addEventListener('scroll', function(){
-            if(header.hasStick){
-              header.$el.removeClass('stick');
-              if(header.$stickyEl.offset().top - $(window).scrollTop() < 0 || header.$navPanel.hasClass('active'))
-                header.$el.addClass('stick');
-            }
-            // $(window).trigger('resize');
-            header.resizeOnTheFly();
-        }, true);
+        // scroll observer
+        // define the header's pineed state
+        var inter_obs = new IntersectionObserver(
+            ([e]) => {
+                e.target.classList.toggle("is-pinned", e.intersectionRatio < 1)
+                header.panelChecker();
+            },
+            { threshold: [1] }
+        );
+        inter_obs.observe(header.$el.get(0));
 
         $(window).resize(function(){
-            header.resizeOnTheFly();
+            if (header.watchNav) header.navChecker();
         });
 
         // PANEL INIT STATE
@@ -134,42 +124,89 @@ module.exports = function(app){
             header.navPanelMenus.root.$el.addClass('active');
         else
             header.$el.addClass('no-items');
-        $(window).trigger('resize');
-        header.onResize();
-        // setTimeout(function(){header.$toggler.trigger('click');},1);
+        
+        header.$el.addClass('active');
+
+        // console.log(header);
+        // header.navSwitcher(true); 
+        // header.$toggler.trigger('click');
+        return header;
     };
 
-
-    HeaderFW.prototype.resizeOnTheFly = function(){
+    /**
+     * check the nav size and if it need to switch between reduced and not-reduced states
+     */
+    HeaderFW.prototype.navChecker = function(){
         var header = this;
         var isOffset = false;
-        if((header.$nav.position().left + header.$navInline.outerWidth()).toFixed(2) > header.$el.outerWidth() || header.$nav.position().left.toFixed(2) < 0)
+        var totalNavWidth = 0;
+        if (header.$el.hasClass('is-reduce')) {
+            if (header.$lang)   header.$lang.insertAfter(header.$navInline);
+            if (header.$search) header.$search.insertAfter(header.$navInline);
+        }
+        header.$nav.children().not('.headerFW__nav__panel,.headerFW__nav__toggler').each(function (){
+            totalNavWidth+=$(this).outerWidth();
+        });
+        if (header.$el.hasClass('is-reduce')) {
+            if (header.$search) header.$search.appendTo(header.navPanelMenus.root.$el.find('.panel__actions'));
+            if (header.$lang)   header.$lang.appendTo(header.navPanelMenus.root.$el.find('.panel__actions'));
+        }
+        if((header.$nav.position().left + totalNavWidth).toFixed(2) > header.$el.outerWidth() || header.$nav.position().left.toFixed(2) < 0)
             isOffset = true;
+
         if(isOffset){
-            header.$clone.addClass('reduced');
-            header.$el.addClass('reduced');
-            // header.menuSwipe.on('swipeleft swiperight', header.menuEvents);
-            if(header.$el.hasClass('headbanner--above'))
-                header.$stickyEl = header.$el;
+            header.navSwitcher(isOffset);
         }
         else{
             if(!header.$navPanel.hasClass('active')){
-                header.$clone.removeClass('reduced');
-                header.$el.removeClass('reduced');
-                if(header.$el.hasClass('headbanner--above'))
-                    header.$stickyEl = header.$nav;
+                header.navSwitcher(isOffset);
             }
-            // header.menuSwipe.off('swipeleft swiperight');
+        }
+        header.panelChecker();
+    };
+
+    /**
+     * switch the header between reduced and not-reduced states
+     * @param  {Boolean} reduce 
+     */
+    HeaderFW.prototype.navSwitcher = function(reduce = false){
+        var header = this;
+        if (reduce) {
+            header.$el.addClass('is-reduce');
+            if (header.$search) header.$search.appendTo(header.navPanelMenus.root.$el.find('.panel__actions'));
+            if (header.$lang)   header.$lang.appendTo(header.navPanelMenus.root.$el.find('.panel__actions'));
+        } else {
+            header.$el.removeClass('is-reduce');
+            var $anchor = header.$navInline;
+            if (header.$postnav)
+                $anchor = header.$postnav;
+            if (header.$lang)   header.$lang.insertAfter(header.$postnav?header.$postnav:header.$navInline);
+            if (header.$search) header.$search.insertAfter(header.$postnav?header.$postnav:header.$navInline);
         }
     };
+
+    /**
+     * controls and change panel's height according to the header pinned state
+     */
+    HeaderFW.prototype.panelChecker = function(){
+        var header = this;
+        if (header.$navPanel.hasClass('active')) {
+            if(header.$el.hasClass('is-pinned'))
+                header.$navPanel.css('height', viewport.height - header.$el.outerHeight() + 1);
+            else
+                header.$navPanel.css('height', viewport.height - (header.$el.position().top + header.$el.outerHeight()) + 1);
+                // header.$navPanel.css('height', viewport.height - (header.$el.get(0).getBoundingClientRect().top + header.$el.outerHeight()));
+                // header.$navPanel.css('height', viewport.height - (header.$el.get(0).getBoundingClientRect().top + header.$el.outerHeight()) + 1);
+        }
+    };
+
     HeaderFW.prototype.onResize = function(){
         var header = this;
-        header.$navInline.find('ul ul').addClass('no-transition').removeClass('offset-right').each(function(){
+        header.$navInline.find('li ul').addClass('no-transition').removeClass('offset-right').each(function(){
             var offsetRight = $(this).offset().left + $(this).outerWidth();
             if(offsetRight > viewport.width)
                 $(this).addClass('offset-right');
         }).removeClass('no-transition');
-        header.$nav.addClass('active');
     };
 
     return HeaderFW;
