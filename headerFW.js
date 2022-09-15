@@ -89,6 +89,50 @@ module.exports = function(app){
             if (e.target.className.indexOf('headerFW') == -1 && e.target.closest('.headerFW') == null)
                 header.$toggler.trigger('click');
         }
+        if (header.$search) {
+            header.searchParameter = header.$search.find('input').prop('name');
+            var isNavWatching = header.watchNav;
+            header.$search.on('click',function(e){
+                if (!header.$search.hasClass('active')) {
+                    header.watchNav = false;
+                    header.$search.addClass('active');
+                    if (document.body.classList.contains('mobile'))
+                        header.$navPanel.addClass('mobile');
+                    header.$nav.addClass('no-overflow');
+                    header.$search.find('input').focus();
+                    header.$search.on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(e){
+                        header.$search.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend');
+                        setTimeout(function(){
+                            document.body.addEventListener('click',searchClickHandler);
+                        },getComputedStyle(header.$search.find('input').get(0)).transitionDuration.replace('s','') * 1000)
+                    })
+                }
+            });
+
+            // handle click "outside" of the header, allowing to close the search by taping on the page body
+            var searchClickHandler = function(e){
+                if (e.target.className.indexOf('headerFW__search') == -1 && $(e.target).closest('.headerFW__search').length == 0){
+                    header.$search.on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(e){
+                        header.watchNav = isNavWatching;
+                        header.$nav.removeClass('no-overflow');
+                        header.$search.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend');
+                    })
+                    header.$search.removeClass('active');
+                    if (document.body.classList.contains('mobile'))
+                        header.$navPanel.removeClass('mobile');
+                    document.body.removeEventListener('click',searchClickHandler);
+                }
+            }
+
+            setTimeout(function(){
+                if (window.location.search.indexOf('?') != -1 && window.location.search.indexOf(header.searchParameter) != -1) {
+                    var searchParams = new URLSearchParams(window.location.search);
+                    header.$search.find('input').val(searchParams.get(header.searchParameter));
+                    if (!header.$el.hasClass('is-reduce'))
+                        header.$search.trigger('click');
+                }
+            },1000)
+        }
 
         // click on submenu toggler
         // hide the current panel, show the next one
@@ -126,7 +170,6 @@ module.exports = function(app){
             header.$el.addClass('no-items');
         
         header.$el.addClass('active');
-
         // console.log(header);
         // header.navSwitcher(true); 
         // header.$toggler.trigger('click');
@@ -141,8 +184,8 @@ module.exports = function(app){
         var isOffset = false;
         var totalNavWidth = 0;
         if (header.$el.hasClass('is-reduce')) {
-            if (header.$lang)   header.$lang.insertAfter(header.$navInline);
-            if (header.$search) header.$search.insertAfter(header.$navInline);
+            if (header.$search) header.$nav.append(header.$search);
+            if (header.$lang)   header.$nav.append(header.$lang);
         }
         header.$nav.children().not('.headerFW__nav__panel,.headerFW__nav__toggler').each(function (){
             totalNavWidth+=$(this).outerWidth();
@@ -180,8 +223,8 @@ module.exports = function(app){
             var $anchor = header.$navInline;
             if (header.$postnav)
                 $anchor = header.$postnav;
-            if (header.$lang)   header.$lang.insertAfter(header.$postnav?header.$postnav:header.$navInline);
-            if (header.$search) header.$search.insertAfter(header.$postnav?header.$postnav:header.$navInline);
+            if (header.$search) header.$nav.append(header.$search);
+            if (header.$lang)   header.$nav.append(header.$lang);
         }
     };
 
