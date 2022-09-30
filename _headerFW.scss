@@ -218,7 +218,7 @@ $z_header : 100;
     }
   }
 }
-.chevron{cursor: pointer; padding: 0; position: relative; display: inline-flex; justify-content: center; align-items: center; font-size: 1em; width: 2.35em; height: 2.35em;
+[class*=headerFW] .chevron{cursor: pointer; padding: 0; position: relative; display: inline-flex; justify-content: center; align-items: center; font-size: 1em; width: 2.35em; height: 2.35em;
   &:before{
     content: "";
     display: block;
