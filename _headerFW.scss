@@ -70,13 +70,21 @@ $z_header : 100;
       }
       ul ul li{
         &.active, &.trail, &:hover{
-          >*:not(ul){background: darken(body(block-background),5);}
+          >*:not(ul){
+            color: contrastFW($primary, body(block-background));
+            // background: darken(body(block-background),5);
+            // background: adjust-color($primary,$lightness: 80);
+            // background: rgba(0,0,0,0.025);
+          }
         }
       }
     }
     .headerFW__nav__panel{
       >ul>li{
-        &.active, &.trail, &:hover{background: darken(body(block-background),5);}
+        &.active, &.trail, &:hover{
+          background: darken(body(block-background),5);
+          color:  contrastFW(body(font-color),body(block-background)); 
+        }
       }
     }
     @each $key, $value in $colors{
@@ -96,6 +104,7 @@ $z_header : 100;
             &.active, &.trail, &:hover{
               @if lightness($value) > 60{background: darken($value,7); }
               @else {background: lighten($value,7); }
+              color:  contrastFW(body(font-color),$value); 
             }
           }
         }
@@ -117,6 +126,7 @@ $z_header : 100;
           &.active, &.trail, &:hover{
             @if lightness(body(background)) > 60{background: darken(body(background),7); }
             @else {background: lighten(body(background),7); }
+            color:  contrastFW(body(font-color),body(background)); 
           }
         }
       }
@@ -184,30 +194,31 @@ $z_header : 100;
   >ul{height: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(12ch,auto);
     >li{height: 100%; 
       >*:not(ul){width: 100%;height: 100%;display: flex;align-items: center;justify-content: center; padding: 1em 1.25em; transition: all 0.5s;}
+      >ul.offset-right{left: auto; right: 0;}
     }
   }
   li{position: relative;
     ul{
       position: absolute; 
       top: 100%; 
-      box-shadow: 0px 0px 10px 5px rgba(0,0,0,.15);
+      box-shadow: 0px 0px 10px 1px rgba(0,0,0,.12);
       opacity: 0;
       visibility: hidden;
       transition: all .4s,transform 0.4s;
       background: body(block-background);
       color:  contrastFW(body(font-color),body(block-background));
       li{
-        &:nth-of-type(2n){background: rgba(0,0,0,0.035);}
+        &:nth-of-type(2n){background: rgba(0,0,0,0.025);}
         >*:not(ul){padding: 0.5em 1.25em 0.75em; display: block;
           &.submenu:after{content:"";display: inline-block; width: 0;height: 0; border-style: solid; border-width: 0.65em 0.35em 0; border-color: currentColor transparent transparent;transform: rotate(-90deg);margin: 0; margin-left: 0.8em; margin-right: -0.25em; opacity: 0.15;}
         }
       }
-      &:hover{
+      &:hover,&.hover{
         opacity: 1;
         visibility: visible;
       }
     }
-    &:hover>ul{
+    &:hover>ul,&.hover>ul{
       opacity: 1;
       visibility: visible;
     }
