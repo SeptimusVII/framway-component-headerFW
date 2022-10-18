@@ -36,8 +36,8 @@ $z_header : 100;
   
 
   // global appearance
-  &.bottom--border{border-bottom: $border-default-size solid rgba($border-default-color,0.15);}
-  &.bottom--shadow{box-shadow: 0 10px 10px 0px rgba(0,0,0,0.15);}
+  &.bottom--border{border-bottom: $border-default-size solid rgba($border-default-color,0.12);}
+  &.bottom--shadow{box-shadow: 0 6px 10px 0px rgba(0,0,0,0.12);}
 
   // nav links hover appearance
   &.hover--underline{
