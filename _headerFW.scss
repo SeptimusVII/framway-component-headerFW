@@ -191,7 +191,8 @@ $z_header : 100;
   .headerFW__nav__toggler {order:66}
 }
 .headerFW__nav__inline{ white-space: nowrap;
-  >ul{height: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(12ch,auto);
+  >ul{height: 100%; display: grid; grid-auto-flow: column; 
+    // grid-auto-columns: minmax(12ch,auto); // causes problems
     >li{height: 100%; 
       >*:not(ul){width: 100%;height: 100%;display: flex;align-items: center;justify-content: center; padding: 1em 1.25em; transition: all 0.5s;}
       >ul.offset-right{left: auto; right: 0;}
