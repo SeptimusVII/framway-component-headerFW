@@ -2,8 +2,8 @@ module.exports = function(app){
     var HeaderFW = Object.getPrototypeOf(app).HeaderFW = new app.Component("headerFW");
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
-    HeaderFW.lastUpdate     = "2.0.0";
-    HeaderFW.version        = "1";
+    HeaderFW.lastUpdate     = "2.0.2";
+    HeaderFW.version        = "1.0.1";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
@@ -86,7 +86,7 @@ module.exports = function(app){
         });
         // handle click "outside" of the header, allowing to close the panel menu by taping on the page body
         var panelClickHandler = function(e){
-            if (e.target.className.indexOf('headerFW') == -1 && e.target.closest('.headerFW') == null)
+            if (e.target.className.indexOf('headerFW') == -1 && e.target.closest('.headerFW,.headerFW__topbar') == null)
                 header.$toggler.trigger('click');
         }
         if (header.$search) {
