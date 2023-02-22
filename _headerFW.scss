@@ -1,4 +1,4 @@
-$z_header : 100;
+$z_header: 100 !default;
 .headerFW{
   z-index: $z_header;
   font-size: header(font-size); 
