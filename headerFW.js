@@ -86,7 +86,7 @@ module.exports = function(app){
         });
         // handle click "outside" of the header, allowing to close the panel menu by taping on the page body
         var panelClickHandler = function(e){
-            if (e.target.className.indexOf('headerFW') == -1 && e.target.closest('.headerFW,.headerFW__topbar') == null)
+            if (e.target.className.indexOf('headerFW') == -1 && e.target.closest('[class*=headerFW]') == null)
                 header.$toggler.trigger('click');
         }
         if (header.$search) {
