@@ -1,5 +1,5 @@
 $z_header : 100;
-.headerFW{ z-index: $z_header; position: relative; @include flex-container(row,nowrap,space-between); box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.06) inset; top: 1px;
+.headerFW{ z-index: $z_header; position: relative; @include flex-container(row,nowrap,space-between); 
   @if header(background){background-color: header(background); }
   @if header(font-color){color: header(font-color); }
   @if header(font-size){font-size: header(font-size); }
