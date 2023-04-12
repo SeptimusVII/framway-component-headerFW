@@ -1,4 +1,4 @@
-$z_header : 100;
+$z_header : 100 !default;
 .headerFW{ z-index: $z_header; position: relative; @include flex-container(row,nowrap,space-between); 
   @if header(background){background-color: header(background); }
   @if header(font-color){color: header(font-color); }
