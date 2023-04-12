@@ -2,8 +2,8 @@ module.exports = function(app){
     var HeaderFW = Object.getPrototypeOf(app).HeaderFW = new app.Component("headerFW");
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
-    HeaderFW.lastUpdate     = "2.0.0";
-    HeaderFW.version        = "1";
+    HeaderFW.lastUpdate     = "2.0.5";
+    HeaderFW.version        = "1.0.1";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
@@ -164,7 +164,9 @@ module.exports = function(app){
     };
     HeaderFW.prototype.onResize = function(){
         var header = this;
-        header.$navInline.find('ul ul').addClass('no-transition').removeClass('offset-right').each(function(){
+        header.$navInline.find('ul ul').addClass('no-transition').removeClass('offset-right offset-left').each(function(){
+            if ($(this).offset().left < 0)
+                $(this).addClass('offset-left');
             var offsetRight = $(this).offset().left + $(this).outerWidth();
             if(offsetRight > viewport.width)
                 $(this).addClass('offset-right');

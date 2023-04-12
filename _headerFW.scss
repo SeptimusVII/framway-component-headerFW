@@ -131,6 +131,9 @@ $z_header : 100 !default;
       &>ul.offset-right{transform: translateX(0) translateY(-20%); left:auto; right: 0; }
       &:hover>ul.offset-right,
       &.hover>ul.offset-right{transform: translateX(0) translateY(0);}
+      &>ul.offset-left{transform: translateX(0) translateY(-20%); right:auto; left: 0; }
+      &:hover>ul.offset-left,
+      &.hover>ul.offset-left{transform: translateX(0) translateY(0);}
     }
     & ul{
       opacity: 0;
