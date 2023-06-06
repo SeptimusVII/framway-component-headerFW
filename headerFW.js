@@ -169,7 +169,8 @@ module.exports = function(app){
         else
             header.$el.addClass('no-items');
         
-        header.onResize()
+        if (header.watchNav) header.navChecker();
+        header.onResize();
         header.$el.addClass('active');
         // console.log(header);
         // header.navSwitcher(true); 
@@ -246,7 +247,7 @@ module.exports = function(app){
 
     HeaderFW.prototype.onResize = function(){
         var header = this;
-        // if(HeaderFW.debug) header.log('resized')
+        if(HeaderFW.debug) header.log('resized');
         header.$navInline.find('li ul').addClass('no-transition').removeClass('offset-right').each(function(){
             var offsetRight = $(this).offset().left + $(this).outerWidth();
             if(offsetRight > viewport.width)
