@@ -289,7 +289,7 @@ $z_header: 100 !default;
     &.active{opacity: 1; visibility: visible; height: 100%; pointer-events: all;}
     li{ position: relative; display: flex;justify-content: space-between;align-items: center;
       &:nth-of-type(2n){background: rgba(0,0,0,0.035);}
-      >*:not(ul):not(.toggler){min-width: 200px; display: block;padding: 0.75em 1.25em ;}
+      >*:not(ul):not(.toggler){min-width: 200px; display: block;padding: 0.75em 1.25em ; flex-grow: 1;}
       &>.toggler{ padding: 0; width: 3em; opacity: .35; transition: all .4s;
         &:before{transform: translateX(-8px) rotate(-45deg); }
         &:hover{opacity: 1;}
