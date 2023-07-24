@@ -149,15 +149,61 @@ module.exports = function(app){
         });
 
         // scroll observer
-        // define the header's pineed state
-        var inter_obs = new IntersectionObserver(
-            ([e]) => {
-                e.target.classList.toggle("is-pinned", e.intersectionRatio < 1)
-                header.panelChecker();
-            },
-            { threshold: [1] }
-        );
-        inter_obs.observe(header.$el.get(0));
+        // define the header's pinned state
+        if (header.stick == true) {
+            var inter_obs = new IntersectionObserver(
+                ([e]) => {
+                    e.target.classList.toggle("is-pinned", e.intersectionRatio < 1)
+                    header.panelChecker();
+                },
+                { threshold: [1] }
+            );
+            inter_obs.observe(header.$el.get(0));
+        }
+        if (header.stick == 'scroll') {
+            var scrollHandler = function () {
+                // console.log('scrollHandler',window.oldScroll,window.scrollY);
+                if (window.oldScroll > window.scrollY) { // going up
+                    // console.log(' going up',header.$el);
+                        header.$el.removeClass('is-unpinned');
+                        header.$el.addClass('is-pinned');
+                } else if (window.oldScroll < window.scrollY) { // going down
+                    // console.log(' going down',header.$el);
+                    if (window.scrollY > header.$el.height() && !header.$el.hasClass('is-open')){
+                    header.$el.removeClass('is-pinned');
+                    header.$el.addClass('is-unpinned');
+                    }
+                }
+                window.oldScroll = window.scrollY;
+            };
+
+            // document.addEventListener("visibilitychange", () => {
+            //   if (document.visibilityState === "visible") {
+            //     console.log('visible')
+            //     scrollHandler()
+            //   } else {
+            //     console.log('change tabs')
+            //   }
+            // });
+
+            var raf = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame;
+            var $window = $(window);
+            var lastScrollTop = $window.scrollTop();
+            function loop() {
+                var scrollTop = $window.scrollTop();
+                if (lastScrollTop === scrollTop) {
+                    raf(loop);
+                    return;
+                } else {
+                    lastScrollTop = scrollTop;
+                    // fire scroll function if scrolls vertically
+                    scrollHandler();
+                    raf(loop);
+                }
+            }
+            if (raf) 
+                loop();
+        }
 
         $(window).resize(function(){
             if (header.watchNav) header.navChecker();

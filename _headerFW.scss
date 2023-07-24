@@ -6,6 +6,14 @@ $z_header: 100 !default;
   width: 100%;
   position: relative;
   &[data-stick=true]{position: sticky; top: -1px; }
+  &[data-stick=scroll]{
+    position: sticky; top: -1px; 
+    will-change: transform;
+    transition: transform .2s linear;
+    transform: translateY(0%);
+    &.is-pinned{transform: translateY(0%);}
+    &.is-unpinned{transform: translateY(-105%);}
+  }
   &:not([class*=bg-]){
     background-color: header(background); 
     color: header(font-color); 
