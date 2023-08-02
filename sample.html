@@ -1,79 +1,74 @@
-<div class="headerFW m-bottom" data-stick="false">
-  <div class="headerFW__headbanner">
-    <a href="#framway__components-headerFW" id="logo"><img src="https://picsum.photos/250/100" alt=""></a>
-    <div>Some random text that serve as punchline</div>
-  </div>
-  <nav class="headerFW__nav">
-    <div class="headerFW__nav__inline" itemscope itemtype="http://schema.org/SiteNavigationElement">
-      <ul class="level_1">
-        <li class="first submenu trail">
-          <a href="#framway__components-headerFW" title="Item 1" itemprop="url"><span itemprop="name">Item 1</span></a>
-          <ul class="level_2">
-            <li class="trail">
-              <a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.1</span></a>
-              <ul class="level_3">
-                <li class="active"><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.1.1</span></a></li>
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.1.2</span></a></li>
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.1.3</span></a></li>
-              </ul>
-            </li>
+<div class="flex-column"> <!-- contextual wrapper, act as page's top level body -->
+  <div class="headerFW " data-stick="stick" data-watchnav="true">
+    <div class="headerFW__wrapper <?= $this->wem_sg_header_width ?>">
+      <div class="headerFW__logo__wrapper">
+        <a href="#" id="logo" class="headerFW__logo" title="title logo">
+          <img src="https://picsum.photos/200/90" alt="alt logo">
+        </a>
+        <div class="headerFW__catchline"><div class="ft-0-8-em">Optional catchphrase <br>lorem ipsum dolor</div></div>
+      </div>
+      <div class="headerFW__nav__wrapper">
+        <div class="headerFW__nav__inline">
+          <ul class="">
+            <li><a href="#">Item 1</a></li>
             <li>
-              <a href="#framway__components-headerFW" itemprop="url" title="Item 1.2"><span itemprop="name">Item 1.2</span></a>
-              <ul class="level_3">
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.2.1</span></a></li>
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.2.2</span></a></li>
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.2.3</span></a></li>
+              <a href="#" class="submenu">Item 2</a>
+              <ul>
+                <li><a href="#">Item 2.1</a></li>
+                <li><a href="#">Item 2.2</a></li>
+                <li><a href="#">Item 2.3</a></li>
               </ul>
             </li>
-            <li class="">
-              <a href="#framway__components-headerFW" itemprop="url" title="Item 1.3"><span itemprop="name">Item 1.3</span></a>
-              <ul class="level_3">
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.3.1</span></a></li>
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.3.2</span></a></li>
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 1.3.3</span></a></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#framway__components-headerFW" title="Item 2" itemprop="url"><span itemprop="name">Item 2</span></a>
-        </li>
-        <li class="submenu">
-          <a href="#framway__components-headerFW" title="Item 3" itemprop="url"><span itemprop="name">Item 3</span></a>
-          <ul class="level_2">
-            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 3.1"><span itemprop="name">Item 3.1</span></a></li>
-            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 3.2"><span itemprop="name">Item 3.2</span></a></li>
-            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 3.3"><span itemprop="name">Item 3.3</span></a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#framway__components-headerFW" title="Item 4" itemprop="url"><span itemprop="name">Item 4</span></a>
-        </li>
-        <li class="last submenu ">
-          <a href="#framway__components-headerFW" title="Item 5" itemprop="url"><span itemprop="name">Item 5 with a long name</span></a>
-          <ul class="level_2">
-            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 5.1"><span itemprop="name">Item 5.1 with a long name</span></a></li>
-            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 5.2"><span itemprop="name">Item 5.2</span></a></li>
-            <li><a href="#framway__components-headerFW" itemprop="url" title="Item 5.2"><span itemprop="name">Item 5.3</span></a></li>
-            <li class="">
-              <a href="#framway__components-headerFW" itemprop="url" title="Item 5.3"><span itemprop="name">Item 5.4</span></a>
-              <ul class="level_3">
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 5.4.1</span></a></li>
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 5.4.2</span></a></li>
-                <li><a href="#framway__components-headerFW" itemprop="url" title="Item 1.1"><span itemprop="name">Item 5.4.3</span></a></li>
+            <li><a href="#">Item 3</a></li>
+            <li>
+              <a href="#" class="submenu">Item 4</a>
+              <ul>
+                <li><a href="#">Item 4.1</a></li>
+                <li><a href="#">Item 4.2</a></li>
+                <li>
+                  <a href="#" class="submenu">Item 4.3</a>
+                  <ul>
+                    <li><a href="#">Item 4.3.1</a></li>
+                    <li><a href="#">Item 4.3.2</a></li>
+                    <li>
+                      <a href="#" class="submenu">Item 4.3.3</a>
+                      <ul>
+                        <li><a href="#">Item 4.3.3.1</a></li>
+                        <li><a href="#">Item 4.3.3.2</a></li>
+                        <li><a href="#">Item 4.3.3.3</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
               </ul>
             </li>
           </ul>
-        </li>
-      </ul>
+        </div>
+        <div class="headerFW__postnav"><div class="ft-0-6-em">Optional <br>Postnav content</div></div>
+        <form method="GET" action="#" class="headerFW__search bg-primary">
+          <div class="input-group form-shrink headerFW__search__field">
+            <input type="text" name="keywords" placeholder="Search...">
+            <button type="submit" class="btn-bg-none squared ft-inherit"><i class="fa fa-search"></i></button>
+          </div>
+        </form>
+        <div class="headerFW__lang bg-secondary">
+          <a href="#">EN</a>
+        </div>
+      </div>
     </div>
-  </nav>
+  </div>
+  <div class="headerFW__topbar bg-secondary">
+    Optional topbar
+  </div>
 </div>
 
+<div class="center m-top-x2 ft-i ft-0-8-em">Because of its inadequate position in the page body, the rendered result of this component might differ from its production state</i>
 <constructor component="headerFW">
 	<field type="separator" label="Misc"></field>
-	<field type="checkbox" label="Headbanner above" target="class" selected="false" value="headbanner--above" helper="Place the headbanner (logo + punchline & co) on top of the menu."></field>
-	<field type="checkbox" label="Center menu" target="class" selected="false" value="nav--center" helper="Center the menu, if the <b>headbanner is placed above</b>."></field>
-	<field type="checkbox" label="Allow headbanner content" target="class" selected="false" value="headbanner--allowcontent" helper="Allow other contents than the logo to be display in the headbanner."></field>
-	<field type="checkbox" label="Arrowed navigation" target="class" selected="true" value="nav--arrowed" helper="Add little arrows on submenu's items, in the inline navigation."></field>
+  <field type="select" label="Background color" target="class" values="bg-#colors" labels="#colors" selected="bg-greylighter" helper="Set the header background color"></field>
+	<field type="select" label="Stick mode" target="data-stick" selected="" values="true,scroll" labels="Stick,Scroll related" helper="changes the navigation alignment (default is right)"></field>
+  <field type="select" label="Nav alignment" target="class" selected="" values="nav--center,nav--left" labels="Center,Left" helper="changes the navigation alignment (default is right)"></field>
+  <field type="select" label="Responsive nav position" target="class" selected="" values="panel--right" labels="Right" helper="changes the responsive navigation panel side (default is left)"></field>
+  <field type="checkbox" label="Watch nav resizing" target="data-watchnav" selected="true" helper="If checked, the header will react on resizing, and switch between desktop and mobile display modes as needed"></field>
+  <field type="empty"></field>
 </constructor>
