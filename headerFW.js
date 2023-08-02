@@ -3,7 +3,7 @@ module.exports = function(app){
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
     HeaderFW.lastUpdate     = "2.4.0";
-    HeaderFW.version        = "1.1.1";
+    HeaderFW.version        = "1.1.2";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
@@ -98,7 +98,7 @@ module.exports = function(app){
                     header.$search.addClass('active');
                     if (document.body.classList.contains('mobile'))
                         header.$navPanel.addClass('mobile');
-                    header.$nav.addClass('no-overflow');
+                    header.$nav.addClass('overflow-hidden');
                     header.$search.find('input').focus();
                     header.$search.on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(e){
                         header.$search.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend');
@@ -114,7 +114,7 @@ module.exports = function(app){
                 if (e.target.className.indexOf('headerFW__search') == -1 && $(e.target).closest('.headerFW__search').length == 0){
                     header.$search.on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(e){
                         header.watchNav = isNavWatching;
-                        header.$nav.removeClass('no-overflow');
+                        header.$nav.removeClass('overflow-hidden');
                         header.$search.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend');
                     })
                     header.$search.removeClass('active');
@@ -169,9 +169,9 @@ module.exports = function(app){
                         header.$el.addClass('is-pinned');
                 } else if (window.oldScroll < window.scrollY) { // going down
                     // console.log(' going down',header.$el);
-                    if (window.scrollY > header.$el.height() && !header.$el.hasClass('is-open')){
-                    header.$el.removeClass('is-pinned');
-                    header.$el.addClass('is-unpinned');
+                    if (window.scrollY > (header.$el.outerHeight() + (header.$topbar ? header.$topbar.outerHeight() : 0)) && !header.$el.hasClass('is-open')){
+                        header.$el.removeClass('is-pinned');
+                        header.$el.addClass('is-unpinned');
                     }
                 }
                 window.oldScroll = window.scrollY;
@@ -204,6 +204,8 @@ module.exports = function(app){
             if (raf) 
                 loop();
         }
+        if (header.stick != false)
+            document.documentElement.style.scrollPaddingBlockStart = header.$el.height();
 
         $(window).resize(function(){
             if (header.watchNav) header.navChecker();
