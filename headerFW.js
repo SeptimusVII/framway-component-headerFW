@@ -3,7 +3,7 @@ module.exports = function(app){
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
     HeaderFW.lastUpdate     = "2.4.0";
-    HeaderFW.version        = "1.1.2";
+    HeaderFW.version        = "1.1.3";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
@@ -205,7 +205,7 @@ module.exports = function(app){
                 loop();
         }
         if (header.stick != false)
-            document.documentElement.style.scrollPaddingBlockStart = header.$el.height();
+            document.documentElement.style.scrollPaddingBlockStart = window.getComputedStyle(header.$el.get(0)).height;
 
         $(window).resize(function(){
             if (header.watchNav) header.navChecker();
