@@ -188,7 +188,7 @@ $z_header: 100 !default;
 .headerFW__catchline{padding: 0.75em 1em; align-self: center;padding-left: 0; margin-left: -0.25em; }
 .headerFW__nav__wrapper{display: flex; flex-grow: 1; justify-content: flex-end; transition: opacity 0.4s; background: inherit;
   ul{list-style: none; padding: 0;margin: 0;
-    &:before,:after{display: none;}
+    &:before,&:after{display: none;}
   }
   >*{order: 0;}
   .headerFW__nav__inline  {order:1}
