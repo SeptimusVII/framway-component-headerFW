@@ -358,10 +358,10 @@ $z_header: 100 !default;
   }
   &:not(.active){
     input[type=text]{width: 0; padding-left: 0;padding-right: 0; border-left-width:0; border-right-width: 0;
-      +.btn{pointer-events: none;}
+      +%btn{pointer-events: none;}
     }
   }
-  .btn#{$exclude}{color: inherit;
+  %btn{color: inherit;
     &:hover,&:focus{color: inherit;}
   }
 }

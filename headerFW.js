@@ -2,8 +2,8 @@ module.exports = function(app){
     var HeaderFW = Object.getPrototypeOf(app).HeaderFW = new app.Component("headerFW");
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
-    HeaderFW.lastUpdate     = "2.4.0";
-    HeaderFW.version        = "1.1.3";
+    HeaderFW.lastUpdate     = "2.4.5";
+    HeaderFW.version        = "1.1.4";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
