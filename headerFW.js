@@ -3,7 +3,7 @@ module.exports = function(app){
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
     HeaderFW.lastUpdate     = "2.4.5";
-    HeaderFW.version        = "1.1.4";
+    HeaderFW.version        = "1.1.5";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
@@ -270,9 +270,6 @@ module.exports = function(app){
             if (header.$lang)   header.$lang.appendTo(header.navPanelMenus.root.$el.find('.panel__actions'));
         } else {
             header.$el.removeClass('is-reduce');
-            var $anchor = header.$navInline;
-            if (header.$postnav)
-                $anchor = header.$postnav;
             if (header.$search) header.$nav.append(header.$search);
             if (header.$lang)   header.$nav.append(header.$lang);
         }
