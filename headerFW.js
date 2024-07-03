@@ -2,8 +2,8 @@ module.exports = function(app){
     var HeaderFW = Object.getPrototypeOf(app).HeaderFW = new app.Component("headerFW");
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
-    HeaderFW.lastUpdate     = "2.4.5";
-    HeaderFW.version        = "1.1.5";
+    HeaderFW.lastUpdate     = "2.5.0";
+    HeaderFW.version        = "1.1.6";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
@@ -237,7 +237,7 @@ module.exports = function(app){
             if (header.$search) header.$nav.append(header.$search);
             if (header.$lang)   header.$nav.append(header.$lang);
         }
-        header.$nav.children().not('.headerFW__nav__panel,.headerFW__nav__toggler').each(function (){
+        header.$nav.children().not('.headerFW__nav__panel,.headerFW__nav__toggler,.exclude').each(function (){
             totalNavWidth+=$(this).outerWidth();
         });
         if (header.$el.hasClass('is-reduce')) {
