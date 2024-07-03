@@ -202,6 +202,7 @@ $z_header: 100 !default;
   .headerFW__nav__toggler {order:66}
 }
 .headerFW__nav__inline{ white-space: nowrap;
+  ul{text-wrap: inherit;}
   >ul{height: 100%; display: grid; grid-auto-flow: column; 
     // grid-auto-columns: minmax(12ch,auto); // causes problems
     >li{height: 100%; 
