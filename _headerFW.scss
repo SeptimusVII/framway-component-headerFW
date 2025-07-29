@@ -48,6 +48,18 @@ $z_header: 100 !default;
   &.bottom--shadow{box-shadow: 0 6px 10px 0px rgba(0,0,0,0.12);}
 
   // nav links hover appearance
+  &.hover--color{
+    .headerFW__nav__inline li{
+      &.active, &.trail, &:hover{
+        >*:not(ul){color: var(--primary,#{$primary});}
+      }
+    }
+    .headerFW__nav__panel li{
+      &.active, &.trail, &:hover{
+        >*:not(ul):not(.toggler){color: var(--primary,#{$primary});}
+      }
+    }
+  }
   &.hover--underline{
     .headerFW__nav__inline li{
       &.active, &.trail, &:hover{
