@@ -2,8 +2,8 @@ module.exports = function(app){
     var HeaderFW = Object.getPrototypeOf(app).HeaderFW = new app.Component("headerFW");
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
-    HeaderFW.lastUpdate     = "2.5.0";
-    HeaderFW.version        = "1.1.6";
+    HeaderFW.lastUpdate     = "2.6.0";
+    HeaderFW.version        = "1.1.7";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
@@ -34,14 +34,18 @@ module.exports = function(app){
             // check duplicate IDs
             if (typeof header.navPanelMenus[ID] != 'undefined')
                 ID = ID+'-'+index;
+            // console.log('-----------------');
+            // console.log(ID);
 
             // clone the corresponding html and setup panel items
             header.navPanelMenus[ID] = {$el : $(menu).clone()};
-            header.navPanelMenus[ID].$el.addClass('panel__item').attr('data-panel',utils.normalize($(menu).parent('li').children().not('ul').text()));
+            header.navPanelMenus[ID].$el.addClass('panel__item').attr('data-panel',ID);
 
             // search for li that have sub ul
-            header.navPanelMenus[ID].$el.children('li').each(function(index,item){
+            header.navPanelMenus[ID].$el.find('li').each(function(index,item){
+                // console.log("------- searching into "+$(item).children('a,strong').text());
                 if($(item).children('ul').length){
+                    // console.log('----------------- '+$(item).children('a,strong').text() + ' has submenu');
                     $(item).append('<div class="toggler chevron"></div>');
                 }
             });
@@ -51,10 +55,10 @@ module.exports = function(app){
 
             // set parent toggler
             if(ID != 'root'){
-                header.navPanelMenus[ID].$el.attr('data-panel',utils.normalize($(menu).parent('li').children().not('ul').text()));
+                header.navPanelMenus[ID].$el.attr('data-panel',ID);
                 var label = 'Retour';
-                if($(menu).parent('li').parent('ul').parent('li').length)
-                    header.navPanelMenus[ID].$el.attr('data-parent',utils.normalize($(menu).parent('li').parent('ul').parent('li').children().not('ul').text()));
+                if($(menu).closest('li').closest('ul').closest('li').length)
+                    header.navPanelMenus[ID].$el.attr('data-parent',utils.normalize($(menu).closest('li').closest('ul').closest('li').children().not('ul').text()));
                 else
                     header.navPanelMenus[ID].$el.attr('data-parent','root');
 
