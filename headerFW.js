@@ -2,8 +2,8 @@ module.exports = function(app){
     var HeaderFW = Object.getPrototypeOf(app).HeaderFW = new app.Component("headerFW");
     // HeaderFW.debug = true;
     HeaderFW.createdAt      = "2.0.0";
-    HeaderFW.lastUpdate     = "2.6.0";
-    HeaderFW.version        = "1.1.7";
+    HeaderFW.lastUpdate     = "2.8.0";
+    HeaderFW.version        = "1.1.8";
     // HeaderFW.factoryExclude = true;
     // HeaderFW.loadingMsg     = "This message will display in the console when component will be loaded.";
     // HeaderFW.requires       = [];
@@ -169,8 +169,12 @@ module.exports = function(app){
                 // console.log('scrollHandler',window.oldScroll,window.scrollY);
                 if (window.oldScroll > window.scrollY) { // going up
                     // console.log(' going up',header.$el);
+                    header.$el.removeClass('is-unpinned');
+                    header.$el.addClass('is-pinned');
+                    if(window.scrollY == 0){ // is at top
+                        header.$el.removeClass('is-pinned');
                         header.$el.removeClass('is-unpinned');
-                        header.$el.addClass('is-pinned');
+                    }
                 } else if (window.oldScroll < window.scrollY) { // going down
                     // console.log(' going down',header.$el);
                     if (window.scrollY > (header.$el.outerHeight() + (header.$topbar ? header.$topbar.outerHeight() : 0)) && !header.$el.hasClass('is-open')){
